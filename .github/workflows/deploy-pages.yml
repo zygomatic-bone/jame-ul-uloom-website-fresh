@@ -8,6 +8,11 @@ on:
       - "public/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Bayanath videos"]
+    types: [completed]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -20,6 +25,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -30,8 +36,6 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Prepare static website (exclude PHP handlers)
         shell: bash
