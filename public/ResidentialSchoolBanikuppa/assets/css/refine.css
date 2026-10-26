@@ -1,0 +1,113 @@
+/* ==== Refinement layer: loaded LAST, after base.css, extras.css, recovered.css and motion.css ====
+   It only adds to the existing design system (same tokens, same class names, same markup). Remove it from the build
+   (generate_portal.py, generate_site.py) and the site returns exactly to how it looked before. Sections:
+     1. Self-hosted type            4. Inner-page header band (navy like the homepage hero; forest green in the Residential School)
+     2. Reading measure             5. Touch targets, motion easing, small-screen glass
+     3. Browser surfaces
+     (depth: navy-tinted layered shadows on inner pages, before section 5)
+   Portal only, in refine-portal.css: the navy dark theme on every page (the homepage already had it).
+   The homepage's light theme is deliberately not restyled: nothing here targets body.page-home except the type files and the
+   touch-target rules. Bayanath and Contact keep their own navy theme (body.page-bayanath, body.page-connect). */
+
+/* 1. Self-hosted type -------------------------------------------------------------------------------------------------------------
+   The old stacks (Aptos / Segoe UI, Iowan Old Style / Palatino Linotype) exist only on some Windows and Apple devices, so phones and
+   other computers showed whatever the system substituted. These files (about 125 KB in total, cached after the first visit) make
+   every device show the same letters. Inter and Lora are SIL Open Font License fonts: see fonts/NOTICE.txt. */
+@font-face { font-family: "Jamia Sans"; src: url("fonts/Inter-Regular.woff") format("woff"); font-weight: 100 599; font-style: normal; font-display: swap; }
+@font-face { font-family: "Jamia Sans"; src: url("fonts/Inter-SemiBold.woff") format("woff"); font-weight: 600 679; font-style: normal; font-display: swap; }
+@font-face { font-family: "Jamia Sans"; src: url("fonts/Inter-Bold.woff") format("woff"); font-weight: 680 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Jamia Serif"; src: url("fonts/JamiaSerif-Variable.woff") format("woff"); font-weight: 400 700; font-style: normal; font-display: swap; }
+/* A local font adjusted to Inter's proportions, shown only while the file loads, so the text does not jump when it arrives. */
+@font-face { font-family: "Jamia Sans Fallback"; src: local("Arial"), local("Helvetica Neue"), local("Helvetica"), local("Liberation Sans"); size-adjust: 107.4%; ascent-override: 90.2%; descent-override: 22.5%; line-gap-override: 0%; }
+:root {
+  --body: "Jamia Sans", "Jamia Sans Fallback", Aptos, "Segoe UI", system-ui, sans-serif;
+  --display: "Jamia Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+body { font-kerning: normal; font-variant-ligatures: common-ligatures; }
+h1, h2, h3, .page-hero .lede { text-wrap: balance; }
+p, li, dd, blockquote, figcaption { text-wrap: pretty; }
+/* Figures that line up in columns (prayer times, statistics, calendars, fact lists). */
+.times strong, .stat strong, .facts dd, table.cal td, table.cal th, .ann li::before, .card-index, .pf-hp-fig, .pf-count { font-variant-numeric: lining-nums tabular-nums; }
+
+/* 2. Reading measure -------------------------------------------------------------------------------------------------------------
+   Measured on the built pages: essays ran 92-97 characters per line, and the Jamia Masjid, Colleges and letter pages up to 142.
+   About 40rem gives 70-75 characters, the comfortable range for reading. Cards, tables, fact lists and the homepage are not touched. */
+.rc-prose > p, .rc-text p, .rc-text blockquote, .prose p, .prose li, .rc-letter > .rc-text, .source-copy p,
+.cx-note, .cx-list li, .sup-note { max-inline-size: 40rem; }
+
+/* 3. Browser surfaces ------------------------------------------------------------------------------------------------------------
+   Selection colour, form controls, the scrollbar and list markers all shipped with browser defaults. */
+:root { accent-color: var(--forest-2); caret-color: var(--gold); scrollbar-color: color-mix(in srgb, var(--forest) 38%, transparent) transparent; }
+::selection { background: color-mix(in srgb, var(--gold) 42%, transparent); color: var(--ink); }
+::marker { color: var(--gold); }
+:where(a, button, summary, input, select, textarea, [tabindex]):focus-visible { outline-offset: 3px; }
+:where(a:not([class]), .text-link, .prose a) { text-decoration-thickness: .08em; text-underline-offset: .22em; }
+img { -webkit-user-drag: none; }
+
+/* 4. Inner-page header band --------------------------------------------------------------------------------------------------------
+   The homepage opens on a navy-and-gold hero. Every other page opened on plain cream, so the first thing a visitor met changed
+   from one page to the next. The same navy, gold and sky tones now carry onto the page headers (all 111 pages use .page-hero).
+   Bayanath and Contact keep their own aurora headers. The colours are variables: navy here, forest green in the Residential School
+   (refine-rs.css), whose own home hero is green. Contrast on the navy: white 19:1, the lede 11:1, the gold crumbs 10:1. */
+:root {
+  --band-a: #0a2a72; --band-b: #071a4d; --band-c: #060d27;
+  --band-glow: rgba(140, 200, 240, .22); --band-warm: rgba(230, 192, 106, .17);
+  --band-text: #c9d3e6; --band-accent: #e6c06a; --band-line: rgba(230, 192, 106, .3); --band-shade: rgba(6, 13, 39, .6);
+}
+body:not(.page-bayanath):not(.page-connect) .page-hero {
+  color: #f4f1ea;
+  background:
+    radial-gradient(56rem 26rem at 88% -18%, var(--band-glow), transparent 62%),
+    radial-gradient(38rem 22rem at 4% 112%, var(--band-warm), transparent 62%),
+    linear-gradient(162deg, var(--band-a) 0%, var(--band-b) 34%, var(--band-c) 100%);
+  background-color: var(--band-b);
+  border-bottom: 1px solid var(--band-line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 18px 40px -26px var(--band-shade);
+}
+body:not(.page-bayanath):not(.page-connect) .page-hero h1 { color: #fff; text-shadow: 0 2px 28px rgba(3, 8, 28, .45); }
+body:not(.page-bayanath):not(.page-connect) .page-hero .lede,
+body:not(.page-bayanath):not(.page-connect) .page-hero p:not(.crumbs):not(.eyebrow) { color: var(--band-text); }
+body:not(.page-bayanath):not(.page-connect) .page-hero .crumbs,
+body:not(.page-bayanath):not(.page-connect) .page-hero .crumbs a { color: var(--band-accent); }
+body:not(.page-bayanath):not(.page-connect) .page-hero .eyebrow { color: var(--band-accent); }
+body:not(.page-bayanath):not(.page-connect) .page-hero .crumbs a:hover { color: #fff; }
+body:not(.page-bayanath):not(.page-connect) .page-hero::before { border-color: var(--band-line); box-shadow: 0 0 0 4rem rgba(230, 192, 106, .05), 0 0 0 8rem rgba(230, 192, 106, .03); }
+body:not(.page-bayanath):not(.page-connect) .page-hero::after { background: radial-gradient(circle, var(--band-glow), transparent 70%); }
+/* buttons placed inside the band follow the homepage hero: light fill, outlined glass for the secondary */
+body:not(.page-bayanath):not(.page-connect) .page-hero .button { border-color: #fffaf1; background: #fffaf1; color: #123c2e; }
+body:not(.page-bayanath):not(.page-connect) .page-hero .button-secondary { border-color: rgba(255, 255, 255, .7); background: rgba(255, 255, 255, .1); color: #fffaf1; }
+body:not(.page-bayanath):not(.page-connect) body:not(.page-bayanath):not(.page-connect) .page-hero a:focus-visible { outline: 3px solid var(--band-accent); outline-offset: 3px; }
+
+/* Depth on inner pages (light theme): two-layer shadows with an offset and a soft blur, tinted navy instead of grey, so cards and photographs
+   sit on the page. The homepage, Bayanath and Contact keep their own shadows. */
+:root:not([data-theme="dark"]) body:not(.page-home):not(.page-bayanath):not(.page-connect) {
+  --shadow-soft: 0 1px 2px rgba(7, 26, 77, .06), 0 14px 30px -12px rgba(7, 26, 77, .16);
+  --shadow: 0 2px 4px rgba(7, 26, 77, .07), 0 30px 60px -18px rgba(7, 26, 77, .26);
+}
+.photo-card .card-media, .media-frame, .gallery-item button { outline: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); outline-offset: -1px; }
+
+/* 5. Touch targets, motion easing, small-screen glass ------------------------------------------------------------------------------ */
+@media (pointer: coarse) {
+  /* 44 px is the comfortable minimum for a fingertip; these controls measured 20-42 px tall. Links inside a sentence are exempt, and the
+     homepage hero's four icon tiles are left as approved (they already meet WCAG's 24 px minimum). */
+  .footer-grid a { padding-block: .7rem; margin: 0; }
+  .footer-bottom a, .crumbs a { display: inline-block; padding-block: .75rem; }
+  .subnav a, .mp-chips a, .sup-card .sup-copy, .mp-vbtn, .sc-dot, .sc-pp, .cx-go, .drop-menu a, .drawer-nav a { min-height: 2.75rem; }
+  .by-yt, .by-status a, .by-meta a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .text-link, .card a.go { display: inline-flex; align-items: center; min-height: 2.75rem; }
+}
+/* Hover and press transitions use one exponential ease-out so they settle softly instead of stopping dead. */
+.button, .icon-button, .subnav a, .filter-button, .drop-menu a, .card { transition-timing-function: var(--ease-out); }
+.button:active, .icon-button:active, .subnav a:active { transform: translateY(0) scale(.98); }
+/* Less blur to compute on phones: the frosted look is the same at this size, the paint cost is lower. */
+@media (max-width: 54rem) { :root { --glass-blur: blur(12px) saturate(150%); } }
+@media (prefers-reduced-motion: reduce) { .button, .icon-button, .subnav a, .filter-button, .drop-menu a, .card { transition-duration: .01ms; } }
+@media print { body:not(.page-bayanath):not(.page-connect) .page-hero { background: none; color: #000; box-shadow: none; } body:not(.page-bayanath):not(.page-connect) .page-hero h1, body:not(.page-bayanath):not(.page-connect) .page-hero .lede, body:not(.page-bayanath):not(.page-connect) .page-hero .crumbs a { color: #000; text-shadow: none; } }
+/* ==== Residential School only (appended after refine.css in the Residential School's assets/css/refine.css) ====
+   The subsite keeps its forest-green identity: its home hero is green, so the inner-page header band is green too, not navy. */
+:root {
+  --band-a: #1c5c45; --band-b: #123c2e; --band-c: #0b2119;
+  --band-glow: rgba(166, 215, 189, .2); --band-warm: rgba(230, 192, 106, .16);
+  --band-text: #d3e2d9; --band-accent: #e6c06a; --band-line: rgba(230, 192, 106, .3); --band-shade: rgba(5, 22, 15, .6);
+}

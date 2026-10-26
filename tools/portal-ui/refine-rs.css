@@ -1,0 +1,7 @@
+/* ==== Residential School only (appended after refine.css in the Residential School's assets/css/refine.css) ====
+   The subsite keeps its forest-green identity: its home hero is green, so the inner-page header band is green too, not navy. */
+:root {
+  --band-a: #1c5c45; --band-b: #123c2e; --band-c: #0b2119;
+  --band-glow: rgba(166, 215, 189, .2); --band-warm: rgba(230, 192, 106, .16);
+  --band-text: #d3e2d9; --band-accent: #e6c06a; --band-line: rgba(230, 192, 106, .3); --band-shade: rgba(5, 22, 15, .6);
+}

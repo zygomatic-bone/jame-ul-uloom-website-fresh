@@ -1,0 +1,21 @@
+/* ==== Portal-only refinement (appended after refine.css in portal.css; not used by the Residential School subsite) ====
+   The Residential School keeps its own forest-green identity in both themes, so this navy dark theme is not applied there. */
+
+/* 5. Navy dark theme on every page -------------------------------------------------------------------------------------------------
+   extras.css gives the homepage a navy dark theme (body.page-home) but every other page still turned green-black, so switching theme
+   changed the identity between pages. The same palette is now the dark theme everywhere; the homepage's own rules are unchanged. */
+:root[data-theme="dark"] {
+  --paper: #070e27; --paper-2: #0c1738; --surface: #0f1a3d; --surface-strong: #15234f;
+  --ink: #f5f2ea; --muted: #b8c2d8;
+  --forest: #e6c06a; --forest-2: #e6c06a; --gold: #e6c06a; --gold-pale: rgba(230, 192, 106, .24);
+  --line: rgba(255, 255, 255, .13);
+  --shadow: 0 24px 70px rgba(0, 0, 0, .45); --shadow-soft: 0 12px 36px rgba(0, 0, 0, .32);
+  --glass: color-mix(in srgb, var(--surface) 62%, transparent); --glass-strong: color-mix(in srgb, var(--surface-strong) 72%, transparent); --glass-edge: rgba(255, 255, 255, .08);
+  --orb-a: rgba(230, 192, 106, .1); --orb-b: rgba(90, 150, 230, .16); --orb-c: rgba(20, 56, 150, .3);
+}
+:root[data-theme="dark"] .site-footer { background: #050b20; border-top: 1px solid rgba(230, 192, 106, .22); }
+:root[data-theme="dark"] .footer-brand p { color: #b8c2d8; }
+:root[data-theme="dark"] .section-dark { background: #050b20; }
+:root[data-theme="dark"] .card-media { background: #0a1332; }
+:root[data-theme="dark"] .page-hero { border-bottom-color: rgba(230, 192, 106, .24); }
+:root[data-theme="dark"] .facts, :root[data-theme="dark"] .times li { border-color: var(--line); }

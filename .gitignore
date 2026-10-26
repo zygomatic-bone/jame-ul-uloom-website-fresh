@@ -1,0 +1,28 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local configuration and databases
+/jame-server/config.php
+/public/api/config.php
+*.sqlite
+*.db
+
+# Dependencies and generated files
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
