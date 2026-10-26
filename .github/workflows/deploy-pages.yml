@@ -36,11 +36,11 @@ jobs:
         run: |
           mkdir -p _site
           cp -a public/. _site/
-          find _site -type f \\( -iname '*.php' -o -iname '*.phtml' -o -iname '*.php[0-9]' \\) -print -delete
+          find _site -type f \( -iname '*.php' -o -iname '*.phtml' -o -iname '*.php[0-9]' \) -print -delete
           rm -f _site/.htaccess
           touch _site/.nojekyll
           test -f _site/index.html
-          if find _site -type f \\( -iname '*.php' -o -iname '*.phtml' \\) | grep -q .; then
+          if find _site -type f \( -iname '*.php' -o -iname '*.phtml' \) | grep -q .; then
             echo "PHP files remain in the GitHub Pages artifact." >&2
             exit 1
           fi
